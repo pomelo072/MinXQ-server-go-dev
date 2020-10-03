@@ -1,0 +1,2 @@
+# MinXQ-server-go-dev
+
