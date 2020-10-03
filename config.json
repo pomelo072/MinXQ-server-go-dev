@@ -1,0 +1,13 @@
+{
+  "Port": ":8086",
+  "AppID":"",
+  "SecretKeyWx":"",
+  "AccessKeyQn ":"",
+  "SecretKeyQn":"",
+  "DBUserName": "",
+  "DBPassword": "",
+  "DBIp": "127.0.0.1",
+  "DBPort": "3306",
+  "DBName": "",
+  "UserToken":"10a34637ad661d98ba3344717656fcc76209c2f8"
+}
