@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>民大Zepeto后台管理端</title>
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://at.alicdn.com/t/font_1853196_6yl3lsm82nh.css"
+    />
+    <style>
+      .icon {
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mdui-tab" mdui-tab>
+      <a href="#example1-tab1" class="mdui-ripple">用户</a>
+      <a href="#example1-tab2" class="mdui-ripple">外貌</a>
+      <a href="#example1-tab3" class="mdui-ripple">装饰</a>
+      <a href="#example1-tab4" class="mdui-ripple">背景</a>
+    </div>
+    <!--
+      用户列表
+    -->
+    <div id="example1-tab1" class="mdui-p-a-2">
+      <table
+        class="table table-hover"
+        id="table-request-user"
+        style="
+          table-layout: fixed;
+          word-break: break-all;
+          word-wrap: break-all;
+        "
+      ></table>
+    </div>
+    <!--
+      用户外貌
+    -->
+    <div id="example1-tab2" class="mdui-p-a-2">
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <div style="padding-right: 50px;">新增：</div>
+        <div class="mdui-textfield" style="width: 200px; padding-right: 60px;">
+          <input
+            class="mdui-textfield-input"
+            type="text"
+            placeholder="TYPE"
+            value=""
+            id="input_add_appearance_type"
+          />
+        </div>
+        <div class="mdui-textfield" style="width: 240px; padding-right: 60px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_add_appearance_url"
+            type="text"
+            value=""
+            placeholder="URL"
+          />
+        </div>
+        <button class="mdui-btn mdui-btn-raised" id="btn_add_appearance">
+          新增
+        </button>
+      </div>
+      <table
+        class="table table-hover"
+        id="table-request-appearance"
+        style="
+          table-layout: fixed;
+          word-break: break-all;
+          word-wrap: break-all;
+        "
+      ></table>
+
+      <div class="mdui-dialog" id="dialog_appearance">
+        <div class="mdui-textfield" style="padding: 20px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_appearance_type"
+            type="text"
+            placeholder="TYPE"
+          />
+        </div>
+
+        <div class="mdui-textfield" style="padding: 20px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_appearance_url"
+            type="text"
+            placeholder="URL"
+          />
+        </div>
+
+        <div class="mdui-dialog-actions">
+          <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>
+            取消
+          </button>
+          <button
+            class="mdui-btn mdui-ripple"
+            id="btn_post_appearance_modify"
+            mdui-dialog-confirm
+          >
+            修改
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--
+      装饰品
+    -->
+    <div id="example1-tab3" class="mdui-p-a-2">
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <div style="padding-right: 50px;">新增：</div>
+        <div class="mdui-textfield" style="width: 200px; padding-right: 60px;">
+          <input
+            class="mdui-textfield-input"
+            type="text"
+            placeholder="NAME"
+            value=""
+            id="input_add_decoration_name"
+          />
+        </div>
+        <div class="mdui-textfield" style="width: 240px; padding-right: 60px;">
+          <input
+            class="mdui-textfield-input"
+            type="text"
+            value=""
+            placeholder="URL"
+            id="input_add_decoration_url"
+          />
+        </div>
+        <button class="mdui-btn mdui-btn-raised" id="btn_add_decoration">
+          新增
+        </button>
+      </div>
+      <table
+        class="table table-hover"
+        id="table-request-decoration"
+        style="
+          table-layout: fixed;
+          word-break: break-all;
+          word-wrap: break-all;
+        "
+      ></table>
+
+      <div class="mdui-dialog" id="dialog_decoration">
+        <div class="mdui-textfield" style="padding: 20px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_decoration_type"
+            type="text"
+            placeholder="TYPE"
+          />
+        </div>
+
+        <div class="mdui-textfield" style="padding: 20px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_decoration_url"
+            type="text"
+            placeholder="URL"
+          />
+        </div>
+
+        <div class="mdui-dialog-actions">
+          <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>
+            取消
+          </button>
+          <button
+            class="mdui-btn mdui-ripple"
+            id="btn_post_decoration_modify"
+            mdui-dialog-confirm
+          >
+            修改
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--
+      背景
+    -->
+    <div id="example1-tab4" class="mdui-p-a-2">
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <div style="padding-right: 50px;">新增：</div>
+        <div class="mdui-textfield" style="width: 200px; padding-right: 60px;">
+          <input
+            class="mdui-textfield-input"
+            type="text"
+            placeholder="NAME"
+            value=""
+            id="input_add_background_name"
+          />
+        </div>
+        <div class="mdui-textfield" style="width: 240px; padding-right: 60px;">
+          <input
+            class="mdui-textfield-input"
+            type="text"
+            value=""
+            placeholder="URL"
+            id="input_add_background_url"
+          />
+        </div>
+        <button class="mdui-btn mdui-btn-raised" id="btn_add_background">
+          新增
+        </button>
+      </div>
+      <table
+        class="table table-hover"
+        id="table-request-background"
+        style="
+          table-layout: fixed;
+          word-break: break-all;
+          word-wrap: break-all;
+        "
+      ></table>
+
+      <div class="mdui-dialog" id="dialog_background">
+        <div class="mdui-textfield" style="padding: 20px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_background_name"
+            type="text"
+            placeholder="NAME"
+          />
+        </div>
+
+        <div class="mdui-textfield" style="padding: 20px;">
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_background_url"
+            type="text"
+            placeholder="URL"
+          />
+        </div>
+
+        <div class="mdui-dialog-actions">
+          <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>
+            取消
+          </button>
+          <button
+            class="mdui-btn mdui-ripple"
+            id="btn_post_background_modify"
+            mdui-dialog-confirm
+          >
+            修改
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script>
+      var GlobalID = 0;
+      axios.defaults.baseURL = "http://123.56.241.180:8081";
+      axios.defaults.headers.post["Content-Type"] = "x-www-form-urlencoded";
+    </script>
+    <script>
+      //用户列表
+      $("#table-request-user").bootstrapTable({
+        url: "/personal/get-all-user-info", //请求后台的URL（*）
+        method: "get", //请求方式（*）
+        responseHandler: function (res) {
+          console.log(res);
+          return res.Data;
+        },
+        toolbar: "#toolbar", //工具按钮用哪个容器
+        striped: true, //是否显示行间隔色
+        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        pagination: true, //是否显示分页（*）
+        sortable: true, //是否启用排序
+        sortOrder: "asc", //排序方式
+        //queryParams: 'queryParams',         //传递参数（*）
+        sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+        pageNumber: 1, //初始化加载第一页，默认第一页
+        pageSize: 10, //每页的记录行数（*）
+        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+        strictSearch: true,
+        minimumCountColumns: 2, //最少允许的列数
+        clickToSelect: true, //是否启用点击选中行
+        height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+        uniqueId: "ID", //每一行的唯一标识，一般为主键列
+        columns: [
+          {
+            field: "ID",
+            title: "ID",
+          },
+          {
+            field: "NAME",
+            title: "姓名",
+          },
+          {
+            field: "COLLEGE",
+            title: "学院",
+          },
+          {
+            field: "MAJOR",
+            title: "专业",
+          },
+          {
+            field: "CLASS",
+            title: "班级",
+          },
+          {
+            field: "MYIMG",
+            title: "个人图片",
+          },
+        ], //列设置
+      });
+    </script>
+
+    <script>
+      //用户外貌列表
+      $("#table-request-appearance").bootstrapTable({
+        url: "/appearance/get-list",
+        method: "get",
+        responseHandler: function (res) {
+          return res.Data;
+        },
+        toolbar: "#toolbar",
+        striped: true,
+        cache: false,
+        pagination: true,
+        sortable: true,
+        sortOrder: "asc",
+        sidePagination: "client",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 25, 50, 100],
+        search: true,
+        strictSearch: true,
+        minimumCountColumns: 2,
+        clickToSelect: true,
+        height: 500,
+        uniqueId: "ID",
+        columns: [
+          {
+            field: "ID",
+            title: "ID",
+          },
+          {
+            field: "TYPE",
+            title: "类型",
+          },
+          {
+            field: "URL",
+            title: "图片地址",
+          },
+          {
+            field: "operator",
+            title: "操作",
+            align: "center",
+            valign: "middle",
+            width: "120",
+            formatter: function (value, row, index) {
+              return (
+                '<a href="#editProject" data-toggle="modal" title="修改">' +
+                '<i class="iconfont iconxiugai-copy"></i> ' +
+                "</a>" +
+                '<a href="javascript:void(0)" title="删除">' +
+                '<i class="iconfont iconshanchu"></i> ' +
+                "</a>"
+              );
+            },
+            events: {
+              "click a[title=删除]": function (e, value, row, index) {
+                var r = confirm("确定要删除吗!");
+                if (r == true) {
+                  axios({
+                    method: "post",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    url: "/appearance/delete",
+                    params: {
+                      id: row.ID,
+                    },
+                  }).then((res) => {
+                    if (res.data == 200) {
+                      location.reload();
+                    } else {
+                      console.log("无权限");
+                    }
+                  });
+                } else {
+                  console.log("已取消");
+                }
+              },
+              "click a[title=修改]": function (e, value, row, index) {
+                GlobalID = row.ID;
+                dialog_appearance.open();
+              },
+            },
+          },
+        ], //列设置
+      });
+
+      var dialog_appearance = new mdui.Dialog("#dialog_appearance");
+      var dialog = document.getElementById("dialog_appearance");
+      //新增
+      var add_appearance = document.getElementById("btn_add_appearance");
+      add_appearance.addEventListener(
+        "click",
+        function () {
+          let url = document.getElementById("input_add_appearance_url").value;
+          let type = document.getElementById("input_add_appearance_type").value;
+          var r = confirm("确定要新增吗!");
+          if (r == true) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/appearance/add",
+              params: {
+                type,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
+          } else {
+            console.log("已取消");
+          }
+        },
+        false
+      );
+      //修改
+      var btn_post_appearance_modify = document
+        .getElementById("btn_post_appearance_modify")
+        .addEventListener("click", function () {
+          let type = getElementById("input_modify_appearance_type").value;
+          let url = getElementById("input_modify_appearance_url").value;
+          if (type && url) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/appearance/modify",
+              params: {
+                id: GlobalID,
+                type,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
+          } else {
+            alert("不许为空，哼！");
+          }
+        });
+    </script>
+
+    <script>
+      //装饰品列表
+      $("#table-request-decoration").bootstrapTable({
+        url: "/decoration/get-list",
+        method: "get",
+        responseHandler: function (res) {
+          console.log(res.Data);
+          return res.Data;
+        },
+        toolbar: "#toolbar",
+        striped: true,
+        cache: false,
+        pagination: true,
+        sortable: true,
+        sortOrder: "asc",
+        sidePagination: "client",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 25, 50, 100],
+        search: true,
+        strictSearch: true,
+        minimumCountColumns: 2,
+        clickToSelect: true,
+        height: 500,
+        uniqueId: "ID",
+        columns: [
+          {
+            field: "ID",
+            title: "ID",
+          },
+          {
+            field: "Name",
+            title: "叫啥",
+          },
+          {
+            field: "URL",
+            title: "图片地址",
+          },
+          {
+            field: "operator",
+            title: "操作",
+            align: "center",
+            valign: "middle",
+            width: "120",
+            formatter: function (value, row, index) {
+              return (
+                '<a href="#editProject" data-toggle="modal" title="修改">' +
+                '<i class="iconfont iconxiugai-copy"></i> ' +
+                "</a>" +
+                '<a href="javascript:void(0)" title="删除">' +
+                '<i class="iconfont iconshanchu"></i> ' +
+                "</a>"
+              );
+            },
+            events: {
+              "click a[title=删除]": function (e, value, row, index) {
+                var r = confirm("确定要删除吗!");
+                if (r == true) {
+                  axios({
+                    method: "post",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    url: "/decoration/delete",
+                    params: {
+                      id: row.ID,
+                    },
+                  }).then((res) => {
+                    if (res.data == 200) {
+                      location.reload();
+                    } else {
+                      console.log("无权限");
+                    }
+                  });
+                } else {
+                  console.log("已取消");
+                }
+              },
+              "click a[title=修改]": function (e, value, row, index) {
+                GlobalID = row.ID;
+                dialog_decoration.open();
+              },
+            },
+          },
+        ], //列设置
+      });
+      var dialog_decoration = new mdui.Dialog("#dialog_decoration");
+      var dialog = document.getElementById("dialog_decoration");
+      //新增
+      var add_decoration = document.getElementById("btn_add_decoration");
+      add_decoration.addEventListener("click", function () {
+        let url = document.getElementById("input_add_decoration_url").value;
+        let name = document.getElementById("input_add_decoration_name").value;
+        var r = confirm("确定要新增吗!");
+        if (r == true) {
+          axios({
+            method: "post",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            url: "/decoration/add",
+            params: {
+              name,
+              url,
+            },
+          }).then((res) => {
+            if (res.data == 200) {
+              location.reload();
+            } else {
+              console.log("无权限");
+            }
+          });
+        } else {
+          console.log("已取消");
+        }
+      });
+
+      var btn_post_decoration_modify = document
+        .getElementById("btn_post_decoration_modify")
+        .addEventListener("click", function () {
+          let type = getElementById("input_modify_decoration_type").value;
+          let url = getElementById("input_modify_decoration_url").value;
+          if (type && url) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/decoration/modify",
+              params: {
+                id: GlobalID,
+                name,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
+          } else {
+            alert("不许为空，哼！");
+          }
+        });
+      //删除
+    </script>
+
+    <script>
+      //背景列表
+      $("#table-request-background").bootstrapTable({
+        url: "/background/get-list",
+        method: "get",
+        responseHandler: function (res) {
+          console.log(res);
+          return res.Data;
+        },
+        toolbar: "#toolbar",
+        striped: true,
+        cache: false,
+        pagination: true,
+        sortable: true,
+        sortOrder: "asc",
+        sidePagination: "client",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 25, 50, 100],
+        search: true,
+        strictSearch: true,
+        minimumCountColumns: 2,
+        clickToSelect: true,
+        height: 500,
+        uniqueId: "ID",
+        columns: [
+          {
+            field: "ID",
+            title: "ID",
+          },
+          {
+            field: "Name",
+            title: "名字",
+          },
+          {
+            field: "URL",
+            title: "图片地址",
+          },
+          {
+            field: "operator",
+            title: "操作",
+            align: "center",
+            valign: "middle",
+            width: "120",
+            formatter: function (value, row, index) {
+              return (
+                '<a href="#editProject" data-toggle="modal" title="修改">' +
+                '<i class="iconfont iconxiugai-copy"></i> ' +
+                "</a>" +
+                '<a href="javascript:void(0)" title="删除">' +
+                '<i class="iconfont iconshanchu"></i> ' +
+                "</a>"
+              );
+            },
+            events: {
+              "click a[title=删除]": function (e, value, row, index) {
+                var r = confirm("确定要删除吗!");
+                if (r == true) {
+                  axios({
+                    method: "post",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    url: "/background/delete",
+                    params: {
+                      id: row.ID,
+                    },
+                  }).then((res) => {
+                    if (res.data == 200) {
+                      location.reload();
+                    } else {
+                      console.log("无权限");
+                    }
+                  });
+                } else {
+                  console.log("已取消");
+                }
+              },
+              "click a[title=修改]": function (e, value, row, index) {
+                GlobalID = row.ID;
+                dialog_background.open();
+              },
+            },
+          },
+        ], //列设置
+      });
+
+      var dialog_background = new mdui.Dialog("#dialog_background");
+      var dialog = document.getElementById("dialog_background");
+      //新增
+      var add_background = document.getElementById("btn_add_background");
+      add_background.addEventListener("click", function () {
+        let url = document.getElementById("input_add_background_url").value;
+        let name = document.getElementById("input_add_background_name").value;
+        var r = confirm("确定要新增吗!");
+        if (r == true) {
+          axios({
+            method: "post",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            url: "/background/add",
+            params: {
+              name,
+              url,
+            },
+          }).then((res) => {
+            if (res.data == 200) {
+              location.reload();
+            } else {
+              console.log("无权限");
+            }
+          });
+        } else {
+          console.log("已取消");
+        }
+      });
+
+      var btn_post_background_modify = document
+        .getElementById("btn_post_background_modify")
+        .addEventListener("click", function () {
+          let type = getElementById("input_modify_background_name").value;
+          let url = getElementById("input_modify_background_url").value;
+          if (type && url) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/background/modify",
+              params: {
+                id: GlobalID,
+                name,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
+          } else {
+            alert("不许为空，哼！");
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>登录</title>
+    <link
+            rel="stylesheet"
+            href="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css"
+    />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <style>
+        .btn_login {
+            width: 10vw;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+
+        .input_login {
+            width: 40vw;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body
+        class="mdui-theme-primary-blue-grey mdui-theme-accent-mdui-color-blue-200"
+>
+<div style="margin-top: 250px;">
+    <div class="mdui-textfield input_login">
+        <i class="mdui-icon material-icons">account_circle</i>
+        <input
+                class="mdui-textfield-input"
+                id="input_username"
+                type="text"
+                value=""
+                placeholder="User Name"
+        />
+    </div>
+    <div class="mdui-textfield input_login">
+        <i class="mdui-icon material-icons">lock</i>
+        <input
+                class="mdui-textfield-input"
+                id="input_password"
+                type="password"
+                value=""
+                placeholder="Password"
+        />
+    </div>
+    <div class="mdui-col btn_login">
+        <button
+                id="btn_post_login"
+                class="mdui-btn mdui-btn-block mdui-color-blue-200 mdui-ripple"
+        >
+            登录
+        </button>
+    </div>
+</div>
+<script>
+    axios.defaults.baseURL = "http://127.0.0.1:8086";
+    axios.defaults.headers.post["Content-Type"] = "x-www-form-urlencoded";
+</script>
+<script>
+    let btn_login = document.getElementById("btn_post_login");
+    btn_login.addEventListener("click", postToLogin);
+
+    function postToLogin() {
+        let adminName = document.getElementById("input_username").value;
+        let adminPsw = document.getElementById("input_password").value;
+        axios({
+            method: "post",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            url: "/adm/LoginAuth",
+            params: {
+                adminName,
+                adminPsw,
+            },
+        }).then((res) => {
+            if (res.data == 200) {
+                location.reload()
+            } else {
+                alert("账号密码错误")
+            }
+        });
+    }
+</script>
+</body>
+</html>
