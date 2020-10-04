@@ -40,3 +40,11 @@ func LoginAuth(ctx iris.Context) {
 		ctx.WriteString("400")
 	}
 }
+
+func Total_Users(ctx iris.Context) {
+
+}
+
+func Total_Stars(ctx iris.Context) {
+
+}
