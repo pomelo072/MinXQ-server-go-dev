@@ -41,10 +41,6 @@ func LoginAuth(ctx iris.Context) {
 	}
 }
 
-func Total_Users(ctx iris.Context) {
-
-}
-
-func Total_Stars(ctx iris.Context) {
+func Total(ctx iris.Context) {
 
 }
