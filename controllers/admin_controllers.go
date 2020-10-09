@@ -41,6 +41,7 @@ func LoginAuth(ctx iris.Context) {
 	}
 }
 
+// 获取统计信息
 func Total(ctx iris.Context) {
 
 }
