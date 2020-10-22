@@ -6,8 +6,10 @@ import (
 
 func Createtable() {
 	// 数据库自动迁移
-	GetDB().AutoMigrate(
+	Db.AutoMigrate(
 		&models.User{},
 		&models.Stars{},
+		&models.Reply{},
+		&models.Comment{},
 	)
 }
