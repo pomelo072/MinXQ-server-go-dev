@@ -10,14 +10,16 @@ import (
 
 var Db *gorm.DB
 
-func GetDB() *gorm.DB {
-	return Db
-}
+//
+//func GetDB() *gorm.DB {
+//	return Db
+//}
 
 func init() {
 	// 合成数据库连接
 	dsn := strings.Join([]string{config.Sysconfig.DBUserName, ":", config.Sysconfig.DBPassword, "@(", config.Sysconfig.DBIp, ":", config.Sysconfig.DBPort, ")/", config.Sysconfig.DBName, "?charset=utf8mb4&parseTime=true&loc=Local"}, "")
-	db, err := gorm.Open(mysql.New(mysql.Config{
+	var err error
+	Db, err = gorm.Open(mysql.New(mysql.Config{
 		DSN:                       dsn,
 		SkipInitializeWithVersion: false,
 	}), &gorm.Config{})
@@ -25,7 +27,7 @@ func init() {
 		panic(err)
 	}
 	// 数据库设置
-	sqlDB, err := db.DB()
+	sqlDB, err := Db.DB()
 	if err != nil {
 		panic(err)
 	}

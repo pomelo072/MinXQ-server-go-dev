@@ -4,5 +4,5 @@ package models
 type Stars struct {
 	ID      int    `gorm:"primaryKey"`
 	ADDRESS string `gorm:"type:varchar(20);index"`
-	STAR    int    `gorm:"type:int(10000000)"`
+	STAR    int    `gorm:"type:int(100)"`
 }

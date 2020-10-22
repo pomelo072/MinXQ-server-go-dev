@@ -20,3 +20,13 @@ func CreateUser(id string) models.User {
 	database.Db.Create(&user)
 	return user
 }
+
+func GetpersonalInfo(userid string) *models.User {
+	result := new(models.User)
+	err := database.Db.Model(&result).Where("user_id = ?", userid).First(&result).RowsAffected
+	if err > 0 {
+		return result
+	} else {
+		return nil
+	}
+}
