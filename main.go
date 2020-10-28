@@ -21,8 +21,8 @@ func main() {
 	// 路由分组
 	// 点亮星星
 	app.PartyFunc("/stars", func(stars router.Party) {
-		stars.Post("/light", controllers.StarsLight) // 点亮
-		stars.Get("/list", controllers.StarsList)    // 排行榜
+		stars.Get("/light", controllers.StarsLight) // 点亮
+		stars.Get("/list", controllers.StarsList)   // 排行榜
 	})
 
 	// 消息管理
@@ -47,9 +47,9 @@ func main() {
 	})
 	// 个人界面
 	app.PartyFunc("/personal", func(personal router.Party) {
-		personal.Post("/edit", controllers.PersonalEdit)       // 修改个人信息
-		personal.Post("/comment", controllers.PersonalComment) // 回复
-		personal.Get("/info", controllers.PersonalInfo)        // 查看个人信息
+		personal.Get("/login", controllers.Login)
+		personal.Post("/edit", controllers.PersonalEdit) // 修改个人信息
+		personal.Get("/info", controllers.PersonalInfo)  // 查看个人信息
 	})
 
 	// 统计模块

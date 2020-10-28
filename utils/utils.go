@@ -20,7 +20,11 @@ func GetSHAEncode(str string) string {
 func GetReturnData(dt interface{}, msgstring string) *models.Result {
 	result := new(models.Result)
 	result.Data = dt
-	result.Code = 200
+	if msgstring == "SUCCESS" {
+		result.Code = 200
+	} else {
+		result.Code = 400
+	}
 	result.Msg = msgstring
 	return result
 }

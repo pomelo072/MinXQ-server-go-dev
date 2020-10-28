@@ -30,3 +30,13 @@ func GetpersonalInfo(userid string) *models.User {
 		return nil
 	}
 }
+
+func GetAllpersonalInfo() *[]models.Users {
+	//users := database.Db.Raw("SELECT * FROM users").Limit(5)
+	//
+	//if result != nil {
+	//	return result
+	//} else {
+	return nil
+	//}
+}
