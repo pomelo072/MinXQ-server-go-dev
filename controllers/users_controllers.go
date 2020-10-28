@@ -37,15 +37,16 @@ func PersonalEdit(ctx iris.Context) {
 
 }
 
-// 个人消息回复
-func PersonalComment(ctx iris.Context) {
-
-}
-
 // 获取个人信息
 func PersonalInfo(ctx iris.Context) {
 	userid := ctx.URLParam("user_id")
-	list := myhandler.GetpersonalInfo(userid)
-	result := utils.GetReturnData(list, "SUCCESS")
-	ctx.JSON(result)
+	if userid == "all" {
+		list := myhandler.GetAllpersonalInfo()
+		result := utils.GetReturnData(list, "SUCCESS")
+		ctx.JSON(result)
+	} else {
+		list := myhandler.GetpersonalInfo(userid)
+		result := utils.GetReturnData(list, "SUCCESS")
+		ctx.JSON(result)
+	}
 }

@@ -2,7 +2,10 @@ package controllers
 
 import (
 	"MinXQ-server-go-dev/config"
+	"MinXQ-server-go-dev/database"
+	"MinXQ-server-go-dev/models"
 	"MinXQ-server-go-dev/utils"
+	"fmt"
 	"github.com/kataras/iris/v12"
 )
 
@@ -32,7 +35,7 @@ func LoginAuth(ctx iris.Context) {
 	userpsd := ctx.URLParam("adminPsd")
 	value := utils.GetSHAEncode(utils.GetSHAEncode(username + userpsd))
 	// 测试输出
-	//fmt.Println(value)
+	fmt.Println(value)
 	ctx.SetCookieKV("usertoken", value)
 	if value == config.Sysconfig.UserToken {
 		ctx.WriteString("200")
@@ -43,5 +46,18 @@ func LoginAuth(ctx iris.Context) {
 
 // 获取统计信息
 func Total(ctx iris.Context) {
-
+	// 获取用户总数
+	var user models.User
+	usertotal := database.Db.Find(&user).RowsAffected
+	// 获取点星总数
+	var stars []int
+	var star models.Stars
+	database.Db.Find(&star).Pluck("star", &stars)
+	startotal := 0
+	for _, v := range stars {
+		startotal += v
+	}
+	totallist := models.Total{User: usertotal, Star: startotal}
+	result := utils.GetReturnData(totallist, "SUCCESS")
+	ctx.JSON(result)
 }
