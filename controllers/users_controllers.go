@@ -35,9 +35,9 @@ func Login(ctx iris.Context) {
 
 // 个人信息变更
 func PersonalEdit(ctx iris.Context) {
-	new_user := new(models.User)
-	ctx.ReadJSON(new_user)
-	list := myhandler.Personaledit(new_user)
+	newUser := new(models.User)
+	ctx.ReadJSON(newUser)
+	list := myhandler.Personaledit(newUser)
 	result := utils.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }
@@ -45,13 +45,7 @@ func PersonalEdit(ctx iris.Context) {
 // 获取个人信息
 func PersonalInfo(ctx iris.Context) {
 	userid := ctx.URLParam("user_id")
-	if userid == "all" {
-		list := myhandler.GetAllpersonalInfo()
-		result := utils.GetReturnData(list, "SUCCESS")
-		ctx.JSON(result)
-	} else {
-		list := myhandler.GetpersonalInfo(userid)
-		result := utils.GetReturnData(list, "SUCCESS")
-		ctx.JSON(result)
-	}
+	list := myhandler.GetpersonalInfo(userid)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }
