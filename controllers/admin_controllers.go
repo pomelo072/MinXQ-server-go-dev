@@ -50,11 +50,10 @@ func Total(ctx iris.Context) {
 	var user models.User
 	usertotal := database.Db.Find(&user).RowsAffected
 	// 获取点星总数
-	var stars []int
-	var star models.Stars
-	database.Db.Find(&star).Pluck("star", &stars)
+	var star []int
+	database.Db.Table("stars").Pluck("star", &star)
 	startotal := 0
-	for _, v := range stars {
+	for _, v := range star {
 		startotal += v
 	}
 	totallist := models.Total{User: usertotal, Star: startotal}

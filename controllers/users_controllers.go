@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"MinXQ-server-go-dev/models"
 	"MinXQ-server-go-dev/myhandler"
 	"MinXQ-server-go-dev/utils"
 	"MinXQ-server-go-dev/wxlogin"
@@ -34,19 +35,17 @@ func Login(ctx iris.Context) {
 
 // 个人信息变更
 func PersonalEdit(ctx iris.Context) {
-
+	newUser := new(models.User)
+	ctx.ReadJSON(newUser)
+	list := myhandler.Personaledit(newUser)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }
 
 // 获取个人信息
 func PersonalInfo(ctx iris.Context) {
 	userid := ctx.URLParam("user_id")
-	if userid == "all" {
-		list := myhandler.GetAllpersonalInfo()
-		result := utils.GetReturnData(list, "SUCCESS")
-		ctx.JSON(result)
-	} else {
-		list := myhandler.GetpersonalInfo(userid)
-		result := utils.GetReturnData(list, "SUCCESS")
-		ctx.JSON(result)
-	}
+	list := myhandler.GetpersonalInfo(userid)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }

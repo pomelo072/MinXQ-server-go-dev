@@ -21,6 +21,21 @@ func CreateUser(id string) models.User {
 	return user
 }
 
+func Personaledit(nuser *models.User) string {
+	nName := nuser.NAME
+	nameResult := UseShield(nName)
+	if nameResult == "pass" {
+		err := database.Db.Table("users").Where("user_id = ?", nuser.USERID).Updates(models.User{NAME: nuser.NAME, SCUECID: nuser.SCUECID, COLLEGE: nuser.COLLEGE, ADDRESS: nuser.ADDRESS}).RowsAffected
+		if err > 0 {
+			return "修改成功"
+		} else {
+			return "修改失败"
+		}
+	} else {
+		return "包含敏感词"
+	}
+}
+
 func GetpersonalInfo(userid string) *models.User {
 	result := new(models.User)
 	err := database.Db.Model(&result).Where("user_id = ?", userid).First(&result).RowsAffected
@@ -29,14 +44,4 @@ func GetpersonalInfo(userid string) *models.User {
 	} else {
 		return nil
 	}
-}
-
-func GetAllpersonalInfo() *[]models.Users {
-	//users := database.Db.Raw("SELECT * FROM users").Limit(5)
-	//
-	//if result != nil {
-	//	return result
-	//} else {
-	return nil
-	//}
 }

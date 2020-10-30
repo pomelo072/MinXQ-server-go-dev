@@ -9,17 +9,17 @@ import (
 
 //配置信息
 type sysconfig struct {
-	Port        string `json:"Port"`
-	AppID       string `json:"AppID"`
-	SecretKeyWx string `json:"SecretKeyWx"`
-	AccessKeyQn string `json:"AccessKeyQn"`
-	SecretKeyQn string `json:"SecretKeyQn"`
-	DBUserName  string `json:"DBUserName"`
-	DBPassword  string `json:"DBPassword"`
-	DBIp        string `json:"DBIp"`
-	DBPort      string `json:"DBPort"`
-	DBName      string `json:"DBName"`
-	UserToken   string `json:"UserToken"`
+	Port               string `json:"Port"`
+	AppID              string `json:"AppID"`
+	SecretKeyWx        string `json:"SecretKeyWx"`
+	ALYAccessKeyID     string `json:"ALYAccessKeyID"`
+	ALYAccessKeySecret string `json:"ALYAccessKeySecret"`
+	DBUserName         string `json:"DBUserName"`
+	DBPassword         string `json:"DBPassword"`
+	DBIp               string `json:"DBIp"`
+	DBPort             string `json:"DBPort"`
+	DBName             string `json:"DBName"`
+	UserToken          string `json:"UserToken"`
 }
 
 var Sysconfig = &sysconfig{}
