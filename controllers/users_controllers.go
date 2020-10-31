@@ -45,7 +45,16 @@ func PersonalEdit(ctx iris.Context) {
 // 获取个人信息
 func PersonalInfo(ctx iris.Context) {
 	userid := ctx.URLParam("user_id")
-	list := myhandler.GetpersonalInfo(userid)
+	list := myhandler.GetPersonalInfo(userid)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
+
+// 获取全部用户信息 (后台)
+func PersonalAllInfo(ctx iris.Context) {
+	pages := ctx.URLParam("pages")
+	pagesize := ctx.URLParam("pagesize")
+	list := myhandler.GetPersonalAllInfo(pages, pagesize)
 	result := utils.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

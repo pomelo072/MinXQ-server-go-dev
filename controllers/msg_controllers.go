@@ -46,15 +46,23 @@ func MsgList(ctx iris.Context) {
 
 // 通过审核
 func ReviewPass(ctx iris.Context) {
-
+	msgid := ctx.URLParam("msgid")
+	list := myhandler.PassReview(msgid)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }
 
 // 不通过审核
 func ReviewDel(ctx iris.Context) {
-
+	msgid := ctx.URLParam("msgid")
+	list := myhandler.DelReview(msgid)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }
 
 // 获取待审核留言
 func ReviewList(ctx iris.Context) {
-
+	list := myhandler.ListReview()
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }
