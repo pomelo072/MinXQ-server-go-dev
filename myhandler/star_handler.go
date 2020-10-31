@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// 点星触发, 只能点一次
 func Starlight(userid string, address string) string {
 	user := new(models.User)
 	database.Db.Model(&user).Where("user_id = ?", userid).First(&user)
@@ -21,6 +22,7 @@ func Starlight(userid string, address string) string {
 	}
 }
 
+// 获取排行榜
 func Starlist() interface{} {
 	var list []map[string]interface{}
 	database.Db.Table("stars").Order("star DESC").Limit(10).Find(&list)

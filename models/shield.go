@@ -1,5 +1,6 @@
 package models
 
+// aliyun响应数据
 type Shield struct {
 	Data      ShieldData
 	RequestID string

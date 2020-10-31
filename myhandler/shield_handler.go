@@ -9,7 +9,7 @@ import (
 )
 
 // 调用Aliyun内容安全API
-
+// 审核范围包括广告, 侮辱, 政治, 恐怖, 色情, 血腥, 灌水...
 func UseShield(str string) string {
 	client, err := sdk.NewClientWithAccessKey("cn-shanghai", config.Sysconfig.ALYAccessKeyID, config.Sysconfig.ALYAccessKeySecret)
 	if err != nil {
