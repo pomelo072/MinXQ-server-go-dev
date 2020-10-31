@@ -57,12 +57,12 @@ func WellMsg(MsgID string, Username string) string {
 	lastwellid := user.LASTWELLID
 	t := time.Now()
 	sub := t.Sub(lastwell)
-	if sub.Seconds() < 10 {
-		// 判断点赞间隔
-		return "点太快啦, 10秒后再试噢"
-	} else if MsgID == lastwellid {
+	if MsgID == lastwellid {
 		// 判断是否点赞
 		return "你已经给它点过啦, 去看看别的吧"
+	} else if sub.Seconds() < 10 {
+		// 判断点赞间隔
+		return "点太快啦, 10秒后再试噢"
 	} else {
 		msg := new(models.Reply)
 		database.Db.Table("replies").Where("msg_id = ?", MsgID).First(&msg)
