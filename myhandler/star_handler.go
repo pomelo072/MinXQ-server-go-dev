@@ -15,7 +15,7 @@ func Starlight(userid string, address string) string {
 	} else {
 		database.Db.Model(&user).Where("user_id = ?", userid).Update("laststar", time.Now().Format("2006-01-02"))
 		star := new(models.Stars)
-		database.Db.Where("address = ?", address).First(&star)
+		database.Db.Where("address = ?", address).FirstOrCreate(&star, models.Stars{ADDRESS: address})
 		star.STAR += 1
 		database.Db.Save(&star)
 		return "点星成功"

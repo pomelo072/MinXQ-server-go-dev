@@ -19,7 +19,7 @@ func Addmsg(reply *models.Reply) string {
 		return "包含敏感词"
 	} else if msgResult == "review" {
 		// 可能存在敏感词, 进入审核表
-		review := models.Review{REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, REPLYTIME: time.Now().Format("2006-01-02 15:04:05")}
+		review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, REPLYTIME: time.Now().Format("2006-01-02 15:04:05")}
 		database.Db.Table("reviews").Create(&review)
 		return "留言中可能存在敏感词, 待人工审核通过过后就会发布"
 	} else if msgResult == "pass" {
@@ -32,8 +32,8 @@ func Addmsg(reply *models.Reply) string {
 		sub := nt.Sub(ft)
 		if sub.Minutes() >= 10 {
 			reply.REPLYTIME = nt.Format("2006-01-02 15:04:05")
-			database.Db.Select("replymsg", "replyname", "replytime").Create(&reply)
-			database.Db.Model(&models.User{}).Where("name = ?", reply.REPLYNAME).Update("lastreply", reply.REPLYTIME)
+			database.Db.Select("replymsg", "replyname", "replytime", "user_id").Create(&reply)
+			database.Db.Model(&models.User{}).Where("user_id = ?", reply.USERID).Update("lastreply", reply.REPLYTIME)
 			return "留言成功"
 		} else {
 			return fmt.Sprintf("留言时间要大于10分钟哦, 你的上次留言时间是%s", t.LASTREPLY)
@@ -44,14 +44,14 @@ func Addmsg(reply *models.Reply) string {
 
 // 删除留言, 回复人, 回复时间
 func DelMsg(del *models.Reply) string {
-	database.Db.Table("replies").Where("replyname = ? AND replytime = ?", del.REPLYNAME, del.REPLYTIME).Delete(&del)
+	database.Db.Table("replies").Where("user_id = ?", del.USERID).Delete(&del)
 	return "删除成功"
 }
 
 // 点赞留言
-func WellMsg(MsgID string, Username string) string {
+func WellMsg(MsgID string, Userid string) string {
 	user := new(models.User)
-	database.Db.Table("users").Where("name = ?", Username).First(&user)
+	database.Db.Table("users").Where("user_id = ?", Userid).First(&user)
 	// 查找用户的点赞时间和上条点赞
 	lastwell, _ := time.ParseInLocation("2006-01-02 15:04:05", user.LASTWELL, time.Local)
 	lastwellid := user.LASTWELLID

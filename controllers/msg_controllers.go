@@ -19,8 +19,8 @@ func MsgAdd(ctx iris.Context) {
 // 点赞留言
 func MsgWell(ctx iris.Context) {
 	MsgID := ctx.URLParam("msgid")
-	Username := ctx.URLParam("username")
-	list := myhandler.WellMsg(MsgID, Username)
+	Userid := ctx.URLParam("userid")
+	list := myhandler.WellMsg(MsgID, Userid)
 	result := utils.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

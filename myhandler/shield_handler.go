@@ -24,13 +24,11 @@ func UseShield(str string) string {
 	request.QueryParams["RegionId"] = "cn-shanghai"
 	request.QueryParams["Tasks.1.Content"] = str
 	request.QueryParams["Labels.1.Label"] = "ad"
-	request.QueryParams["Labels.2.Label"] = "spam"
-	request.QueryParams["Labels.3.Label"] = "politics"
-	request.QueryParams["Labels.4.Label"] = "abuse"
-	request.QueryParams["Labels.5.Label"] = "terrorism"
-	request.QueryParams["Labels.6.Label"] = "porn"
-	request.QueryParams["Labels.7.Label"] = "flood"
-	request.QueryParams["Labels.8.Label"] = "contraband"
+	request.QueryParams["Labels.2.Label"] = "politics"
+	request.QueryParams["Labels.3.Label"] = "abuse"
+	request.QueryParams["Labels.4.Label"] = "terrorism"
+	request.QueryParams["Labels.5.Label"] = "porn"
+	request.QueryParams["Labels.6.Label"] = "contraband"
 
 	response, er := client.ProcessCommonRequest(request)
 	if er != nil {
