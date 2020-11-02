@@ -20,7 +20,7 @@ type WxloginRsp struct {
 func WXLogin(code string) (*WxloginRsp, error) {
 	// url组合完整请求
 	url := "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
-	url = fmt.Sprintf(config.Sysconfig.AppID, config.Sysconfig.SecretKeyWx, code)
+	url = fmt.Sprintf(url, config.Sysconfig.AppID, config.Sysconfig.SecretKeyWx, code)
 	// 向微信发起请求
 	rsp, err := http.Get(url)
 	// 最好没错, 用完了就关了吧
