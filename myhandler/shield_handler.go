@@ -29,6 +29,8 @@ func UseShield(str string) string {
 	request.QueryParams["Labels.4.Label"] = "terrorism"
 	request.QueryParams["Labels.5.Label"] = "porn"
 	request.QueryParams["Labels.6.Label"] = "contraband"
+	request.QueryParams["Labels.7.Label"] = "flood"
+	request.QueryParams["Labels.8.Label"] = "spam"
 
 	response, er := client.ProcessCommonRequest(request)
 	if er != nil {
