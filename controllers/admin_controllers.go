@@ -47,8 +47,8 @@ func LoginAuth(ctx iris.Context) {
 // 获取统计信息
 func Total(ctx iris.Context) {
 	// 获取用户总数
-	var user models.User
-	usertotal := database.Db.Find(&user).RowsAffected
+	var usertotal int64
+	database.Db.Table("users").Count(&usertotal)
 	// 获取点星总数
 	var star []int
 	database.Db.Table("stars").Pluck("star", &star)
