@@ -38,7 +38,7 @@ func Addmsg(reply *models.Reply) string {
 
 // 删除留言
 func DelMsg(del *models.Reply) string {
-	database.Db.Table("replies").Where("user_id = ?", del.USERID).Delete(&del)
+	database.Db.Table("replies").Where("user_id = ? AND replytime = ?", del.USERID, del.REPLYTIME).Delete(&del)
 	return "删除成功"
 }
 
