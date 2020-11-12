@@ -27,9 +27,9 @@ func MsgWell(ctx iris.Context) {
 
 // 删除留言
 func MsgDelete(ctx iris.Context) {
-	del := new(models.Reply)
-	ctx.ReadJSON(&del)
-	delMsg := myhandler.DelMsg(del)
+	userid := ctx.URLParam("user_id")
+	replytime := ctx.URLParam("replytime")
+	delMsg := myhandler.DelMsg(userid, replytime)
 	result := utils.GetReturnData(delMsg, "SUCCESS")
 	ctx.JSON(result)
 }
