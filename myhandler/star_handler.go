@@ -6,6 +6,17 @@ import (
 	"time"
 )
 
+type Nation struct {
+	nation string
+	star   int
+	data   interface{}
+}
+
+type Nationls struct {
+	china Nation
+	other interface{}
+}
+
 // 点星触发, 只能点一次
 func Starlight(userid string, address string) string {
 	user := new(models.User)
@@ -25,6 +36,22 @@ func Starlight(userid string, address string) string {
 // 获取排行榜
 func Starlist() interface{} {
 	var list []map[string]interface{}
-	database.Db.Table("stars").Order("star DESC").Limit(10).Find(&list)
+	database.Db.Table("stars").Order("star DESC").Find(&list)
 	return list
+}
+
+func Nationlist() interface{} {
+	var Chinalist []map[string]interface{}
+	var Otherlist []map[string]interface{}
+	database.Db.Table("stars").Where("nation = ?", "中国").Order("star DESC").Limit(10).Find(&Chinalist)
+	database.Db.Table("stars").Not("nation = ?", "中国").Order("star DESC").Find(&Otherlist)
+	var chinastar []int
+	database.Db.Table("stars").Where("nation = ?", "中国").Pluck("star", &chinastar)
+	chinatotal := 0
+	for _, v := range chinastar {
+		chinatotal += v
+	}
+	china := Nation{"中国", chinatotal, Chinalist}
+	result := Nationls{china: china, other: Otherlist}
+	return result
 }
