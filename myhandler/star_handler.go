@@ -18,18 +18,29 @@ type Nationls struct {
 }
 
 // 点星触发, 只能点一次
-func Starlight(userid string, address string) string {
+func Starlight(userid string, address string, flag string) string {
 	user := new(models.User)
 	database.Db.Model(&user).Where("user_id = ?", userid).First(&user)
 	if user.LASTSTAR == time.Now().Format("2006-01-02") {
 		return "你今天已经点过了噢"
 	} else {
-		database.Db.Model(&user).Where("user_id = ?", userid).Update("laststar", time.Now().Format("2006-01-02"))
-		star := new(models.Stars)
-		database.Db.Where("address = ?", address).FirstOrCreate(&star, models.Stars{ADDRESS: address})
-		star.STAR += 1
-		database.Db.Save(&star)
-		return "点星成功"
+		if flag == "1" {
+			database.Db.Model(&user).Where("user_id = ?", userid).Update("laststar", time.Now().Format("2006-01-02"))
+			star := new(models.Stars)
+			database.Db.Where("address = ?", address).FirstOrCreate(&star, models.Stars{NATION: "中国", ADDRESS: address})
+			star.STAR += 1
+			database.Db.Save(&star)
+			return "点星成功"
+		} else if flag == "0" {
+			database.Db.Model(&user).Where("user_id = ?", userid).Update("laststar", time.Now().Format("2006-01-02"))
+			star := new(models.Stars)
+			database.Db.Where("nation = ?", address).FirstOrCreate(&star, models.Stars{NATION: address})
+			star.STAR += 1
+			database.Db.Save(&star)
+			return "点星成功"
+		} else {
+			return "flag error"
+		}
 	}
 }
 

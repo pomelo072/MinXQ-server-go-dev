@@ -9,8 +9,9 @@ import (
 // 点星星
 func StarsLight(ctx iris.Context) {
 	userid := ctx.URLParam("user_id")
-	addess := ctx.URLParam("address")
-	msg := myhandler.Starlight(userid, addess)
+	address := ctx.URLParam("address")
+	flag := ctx.URLParam("flag")
+	msg := myhandler.Starlight(userid, address, flag)
 	result := utils.GetReturnData(msg, "SUCCESS")
 	ctx.JSON(result)
 }
