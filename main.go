@@ -21,8 +21,9 @@ func main() {
 	// 路由分组
 	// 点亮星星 (完成)
 	app.PartyFunc("/stars", func(stars router.Party) {
-		stars.Get("/light", controllers.StarsLight) // 点亮
-		stars.Get("/list", controllers.StarsList)   // 排行榜
+		stars.Get("/light", controllers.StarsLight)      // 点亮
+		stars.Get("/list", controllers.StarsList)        // 排行榜
+		stars.Get("/nationlist", controllers.NationList) // 国外数据
 	})
 
 	// 消息管理 (完成)

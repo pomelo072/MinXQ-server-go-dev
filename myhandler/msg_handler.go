@@ -26,7 +26,9 @@ func Addmsg(reply *models.Reply) string {
 			return "包含敏感词"
 		} else {
 			database.Db.Model(&models.User{}).Where("user_id = ?", reply.USERID).Update("lastreply", nt.Format("2006-01-02 15:04:05"))
-			review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, REPLYTIME: nt.Format("2006-01-02 15:04:05")}
+			u := new(models.User)
+			database.Db.Table("users").Where("user_id = ?", reply.USERID).First(&u)
+			review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, COLLEGE: u.COLLEGE, REPLYTIME: nt.Format("2006-01-02 15:04:05")}
 			database.Db.Table("reviews").Create(&review)
 			return "留言成功, 待人工审核通过过后就会发布"
 		}
@@ -94,7 +96,7 @@ func PassReview(msgid string) string {
 	id, _ := strconv.Atoi(msgid)
 	reply := new(models.Reply)
 	database.Db.Table("reviews").Where("msg_id = ?", id).First(&reply)
-	database.Db.Table("replies").Select("replymsg", "replyname", "replytime", "user_id").Create(&reply)
+	database.Db.Table("replies").Select("replymsg", "replyname", "replytime", "user_id", "college").Create(&reply)
 	database.Db.Table("reviews").Where("msg_id = ?", id).Delete(&reply)
 	return "审核通过, 操作成功"
 }

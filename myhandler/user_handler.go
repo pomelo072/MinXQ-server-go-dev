@@ -28,7 +28,7 @@ func Personaledit(nuser *models.User) string {
 	nName := nuser.NAME
 	nameResult := UseShield(nName)
 	if nameResult == "pass" {
-		err := database.Db.Table("users").Where("user_id = ?", nuser.USERID).Updates(models.User{NAME: nuser.NAME, SCUECID: nuser.SCUECID, COLLEGE: nuser.COLLEGE, ADDRESS: nuser.ADDRESS}).RowsAffected
+		err := database.Db.Table("users").Where("user_id = ?", nuser.USERID).Updates(models.User{NAME: nuser.NAME, SCUECID: nuser.SCUECID, COLLEGE: nuser.COLLEGE, NATION: nuser.NATION, ADDRESS: nuser.ADDRESS}).RowsAffected
 		if err > 0 {
 			return "修改成功"
 		} else {
