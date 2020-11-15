@@ -6,17 +6,6 @@ import (
 	"time"
 )
 
-type Nation struct {
-	nation string
-	star   int
-	data   interface{}
-}
-
-type Nationls struct {
-	china Nation
-	other interface{}
-}
-
 // 点星触发, 只能点一次
 func Starlight(userid string, address string, flag string) string {
 	user := new(models.User)
@@ -62,7 +51,7 @@ func Nationlist() interface{} {
 	for _, v := range chinastar {
 		chinatotal += v
 	}
-	china := Nation{"中国", chinatotal, Chinalist}
-	result := Nationls{china: china, other: Otherlist}
+	china := models.Nation{Nation: "中国", Star: chinatotal, Data: Chinalist}
+	result := models.Nationls{China: china, Other: Otherlist}
 	return result
 }
