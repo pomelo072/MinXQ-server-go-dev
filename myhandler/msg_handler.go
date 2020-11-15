@@ -39,9 +39,16 @@ func Addmsg(reply *models.Reply) string {
 }
 
 // 删除留言
-func DelMsg(id, time string) string {
+
+//func DelMsg(id, time string) string {
+//	del := new(models.Reply)
+//	database.Db.Table("replies").Where("user_id = ? AND replytime = ?", id, time).Delete(&del)
+//	return "删除成功"
+//}
+
+func DelMsg(id string) string {
 	del := new(models.Reply)
-	database.Db.Table("replies").Where("user_id = ? AND replytime = ?", id, time).Delete(&del)
+	database.Db.Table("replies").Where("msg_id = ?", id).Delete(&del)
 	return "删除成功"
 }
 
