@@ -25,6 +25,14 @@ func MsgWell(ctx iris.Context) {
 	ctx.JSON(result)
 }
 
+// 用户点赞列表
+func UserWell(ctx iris.Context) {
+	Userid := ctx.URLParam("userid")
+	list := myhandler.Userwell(Userid)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
+
 // 删除留言
 func MsgDelete(ctx iris.Context) {
 	//userid := ctx.URLParam("user_id")

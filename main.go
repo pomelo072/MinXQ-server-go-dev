@@ -32,6 +32,7 @@ func main() {
 		msg.Get("/well", controllers.MsgWell)          // 点赞
 		msg.Get("/delete", controllers.MsgDelete)      // 删除留言or回复
 		msg.Get("/list", controllers.MsgList)          // 查看留言
+		msg.Get("/userwell", controllers.UserWell)     // 用户点赞列表
 		msg.Get("/reviewPass", controllers.ReviewPass) // 通过审核
 		msg.Get("/reviewdel", controllers.ReviewDel)   // 不通过审核
 		msg.Get("/reviewlist", controllers.ReviewList) // 获取待审核留言

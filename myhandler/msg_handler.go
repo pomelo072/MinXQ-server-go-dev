@@ -54,27 +54,22 @@ func DelMsg(id string) string {
 
 // 点赞留言
 func WellMsg(MsgID string, Userid string) string {
-	user := new(models.User)
-	database.Db.Table("users").Where("user_id = ?", Userid).First(&user)
-	// 查找用户的点赞时间和上条点赞
-	lastwell, _ := time.ParseInLocation("2006-01-02 15:04:05", user.LASTWELL, time.Local)
-	lastwellid := user.LASTWELLID
-	t := time.Now()
-	sub := t.Sub(lastwell)
-	if MsgID == lastwellid {
-		// 判断是否点赞
-		return "你已经给它点过啦, 去看看别的吧"
-	} else if sub.Seconds() < 10 {
-		// 判断点赞间隔
-		return "点太快啦, 10秒后再试噢"
-	} else {
-		msg := new(models.Reply)
-		database.Db.Table("replies").Where("msg_id = ?", MsgID).First(&msg)
-		msg.REPLYWELL += 1
-		database.Db.Table("replies").Where("msg_id = ?", MsgID).Update("replywell", msg.REPLYWELL)
-		database.Db.Table("users").Where("user_id = ?", user.USERID).Updates(&models.User{LASTWELL: t.Format("2006-01-02 15:04:05"), LASTWELLID: MsgID})
-		return "点赞成功"
-	}
+	msg := new(models.Reply)
+	database.Db.Table("replies").Where("msg_id = ?", MsgID).First(&msg)
+	msg.REPLYWELL += 1
+	database.Db.Table("replies").Where("msg_id = ?", MsgID).Update("replywell", msg.REPLYWELL)
+	msgid, _ := strconv.Atoi(MsgID)
+	well := models.Well{USERID: Userid, MSGID: msgid}
+	database.Db.Table("wells").Create(&well)
+	return "点赞成功"
+}
+
+// 用户点赞列表
+func Userwell(Userid string) []int64 {
+	var well []int64
+	welllist := database.Db.Table("wells").Where("user_id = ?", Userid)
+	welllist.Pluck("msg_id", &well)
+	return well
 }
 
 // 获取留言
