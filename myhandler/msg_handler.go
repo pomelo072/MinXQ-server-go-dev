@@ -18,17 +18,17 @@ func Addmsg(reply *models.Reply) string {
 	t := new(models.User)
 	database.Db.Table("users").Where("user_id = ?", reply.USERID).First(&t)
 	// 留言间隔时间判定 > 10分钟
-	ft, _ := time.ParseInLocation("2006-01-02 15:04:05", t.LASTREPLY, time.Local)
+	ft, _ := time.ParseInLocation("01-02 15:04", t.LASTREPLY, time.Local)
 	sub := nt.Sub(ft)
 	if sub.Minutes() >= 10 {
 		// 检测到敏感词
 		if msgResult == "block" {
 			return "包含敏感词"
 		} else {
-			database.Db.Model(&models.User{}).Where("user_id = ?", reply.USERID).Update("lastreply", nt.Format("2006-01-02 15:04:05"))
+			database.Db.Model(&models.User{}).Where("user_id = ?", reply.USERID).Update("lastreply", nt.Format("01-02 15:04"))
 			u := new(models.User)
 			database.Db.Table("users").Where("user_id = ?", reply.USERID).First(&u)
-			review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, COLLEGE: u.COLLEGE, REPLYTIME: nt.Format("2006-01-02 15:04:05")}
+			review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, COLLEGE: u.COLLEGE, REPLYTIME: nt.Format("01-02 15:04")}
 			database.Db.Table("reviews").Create(&review)
 			return "留言成功, 待人工审核通过过后就会发布"
 		}
@@ -39,12 +39,6 @@ func Addmsg(reply *models.Reply) string {
 }
 
 // 删除留言
-
-//func DelMsg(id, time string) string {
-//	del := new(models.Reply)
-//	database.Db.Table("replies").Where("user_id = ? AND replytime = ?", id, time).Delete(&del)
-//	return "删除成功"
-//}
 
 func DelMsg(id string) string {
 	del := new(models.Reply)
