@@ -36,7 +36,7 @@ func Starlight(userid string, address string, flag string) string {
 // 获取排行榜
 func Starlist() interface{} {
 	var list []map[string]interface{}
-	database.Db.Table("stars").Order("star DESC").Find(&list)
+	database.Db.Table("stars").Where("nation = ?", "中国").Order("star DESC").Find(&list)
 	return list
 }
 
