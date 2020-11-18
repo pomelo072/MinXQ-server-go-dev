@@ -10,11 +10,6 @@ import (
 
 var Db *gorm.DB
 
-//
-//func GetDB() *gorm.DB {
-//	return Db
-//}
-
 func init() {
 	// 合成数据库连接
 	dsn := strings.Join([]string{config.Sysconfig.DBUserName, ":", config.Sysconfig.DBPassword, "@(", config.Sysconfig.DBIp, ":", config.Sysconfig.DBPort, ")/", config.Sysconfig.DBName, "?charset=utf8mb4&parseTime=true&loc=Local"}, "")
