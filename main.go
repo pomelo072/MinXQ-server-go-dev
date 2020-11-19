@@ -51,7 +51,8 @@ func main() {
 
 	// 统计模块 (完成)
 	app.PartyFunc("/count", func(count router.Party) {
-		count.Get("/total", controllers.Total) // 总用户量和总点亮数
+		count.Get("/total", controllers.Total)             // 总用户量和总点亮数
+		count.Get("/collegeList", controllers.CollegeList) // 学院点星数
 	})
 	app.Run(iris.Addr(config.Sysconfig.Port))
 }

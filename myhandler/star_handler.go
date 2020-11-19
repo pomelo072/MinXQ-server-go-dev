@@ -15,10 +15,16 @@ func Starlight(userid string, address string, flag string) string {
 	} else {
 		if flag == "1" {
 			database.Db.Model(&user).Where("user_id = ?", userid).Update("laststar", time.Now().Format("2006-01-02"))
+			// 星星表点星
 			star := new(models.Stars)
 			database.Db.Where("address = ?", address).FirstOrCreate(&star, models.Stars{NATION: "中国", ADDRESS: address})
 			star.STAR += 1
 			database.Db.Save(&star)
+			// 学院表点星
+			college := new(models.CollegeList)
+			database.Db.Where("college_id = ?", user.COLLEGE).First(&college)
+			college.STAR += 1
+			database.Db.Save(&college)
 			return "点星成功"
 		} else if flag == "0" {
 			database.Db.Model(&user).Where("user_id = ?", userid).Update("laststar", time.Now().Format("2006-01-02"))
@@ -26,6 +32,11 @@ func Starlight(userid string, address string, flag string) string {
 			database.Db.Where("nation = ?", address).FirstOrCreate(&star, models.Stars{NATION: address})
 			star.STAR += 1
 			database.Db.Save(&star)
+			// 学院表点星
+			college := new(models.CollegeList)
+			database.Db.Where("college_id = ?", user.COLLEGE).First(&college)
+			college.STAR += 1
+			database.Db.Save(&college)
 			return "点星成功"
 		} else {
 			return "flag error"
