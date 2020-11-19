@@ -18,17 +18,17 @@ func Addmsg(reply *models.Reply) string {
 	t := new(models.User)
 	database.Db.Table("users").Where("user_id = ?", reply.USERID).First(&t)
 	// 留言间隔时间判定 > 10分钟
-	ft, _ := time.ParseInLocation("2006-01-02 15:04:05", t.LASTREPLY, time.Local)
+	ft, _ := time.ParseInLocation("01-02 15:04", t.LASTREPLY, time.Local)
 	sub := nt.Sub(ft)
 	if sub.Minutes() >= 10 {
 		// 检测到敏感词
 		if msgResult == "block" {
 			return "包含敏感词"
 		} else {
-			database.Db.Model(&models.User{}).Where("user_id = ?", reply.USERID).Update("lastreply", nt.Format("2006-01-02 15:04:05"))
+			database.Db.Model(&models.User{}).Where("user_id = ?", reply.USERID).Update("lastreply", nt.Format("01-02 15:04"))
 			u := new(models.User)
 			database.Db.Table("users").Where("user_id = ?", reply.USERID).First(&u)
-			review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, COLLEGE: u.COLLEGE, REPLYTIME: nt.Format("2006-01-02 15:04:05")}
+			review := models.Review{USERID: reply.USERID, REPLYMSG: reply.REPLYMSG, REPLYNAME: reply.REPLYNAME, COLLEGE: u.COLLEGE, REPLYTIME: nt.Format("01-02 15:04")}
 			database.Db.Table("reviews").Create(&review)
 			return "留言成功, 待人工审核通过过后就会发布"
 		}
@@ -39,35 +39,31 @@ func Addmsg(reply *models.Reply) string {
 }
 
 // 删除留言
-func DelMsg(id, time string) string {
+
+func DelMsg(id string) string {
 	del := new(models.Reply)
-	database.Db.Table("replies").Where("user_id = ? AND replytime = ?", id, time).Delete(&del)
+	database.Db.Table("replies").Where("msg_id = ?", id).Delete(&del)
 	return "删除成功"
 }
 
 // 点赞留言
 func WellMsg(MsgID string, Userid string) string {
-	user := new(models.User)
-	database.Db.Table("users").Where("user_id = ?", Userid).First(&user)
-	// 查找用户的点赞时间和上条点赞
-	lastwell, _ := time.ParseInLocation("2006-01-02 15:04:05", user.LASTWELL, time.Local)
-	lastwellid := user.LASTWELLID
-	t := time.Now()
-	sub := t.Sub(lastwell)
-	if MsgID == lastwellid {
-		// 判断是否点赞
-		return "你已经给它点过啦, 去看看别的吧"
-	} else if sub.Seconds() < 10 {
-		// 判断点赞间隔
-		return "点太快啦, 10秒后再试噢"
-	} else {
-		msg := new(models.Reply)
-		database.Db.Table("replies").Where("msg_id = ?", MsgID).First(&msg)
-		msg.REPLYWELL += 1
-		database.Db.Table("replies").Where("msg_id = ?", MsgID).Update("replywell", msg.REPLYWELL)
-		database.Db.Table("users").Where("user_id = ?", user.USERID).Updates(&models.User{LASTWELL: t.Format("2006-01-02 15:04:05"), LASTWELLID: MsgID})
-		return "点赞成功"
-	}
+	msg := new(models.Reply)
+	database.Db.Table("replies").Where("msg_id = ?", MsgID).First(&msg)
+	msg.REPLYWELL += 1
+	database.Db.Table("replies").Where("msg_id = ?", MsgID).Update("replywell", msg.REPLYWELL)
+	msgid, _ := strconv.Atoi(MsgID)
+	well := models.Well{USERID: Userid, MSGID: msgid}
+	database.Db.Table("wells").Create(&well)
+	return "点赞成功"
+}
+
+// 用户点赞列表
+func Userwell(Userid string) []int64 {
+	var well []int64
+	welllist := database.Db.Table("wells").Where("user_id = ?", Userid)
+	welllist.Pluck("msg_id", &well)
+	return well
 }
 
 // 获取留言

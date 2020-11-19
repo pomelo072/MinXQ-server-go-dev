@@ -60,3 +60,11 @@ func Total(ctx iris.Context) {
 	result := utils.GetReturnData(totallist, "SUCCESS")
 	ctx.JSON(result)
 }
+
+// 学院排行榜
+func CollegeList(ctx iris.Context) {
+	var list []map[string]interface{}
+	database.Db.Table("college_lists").Order("star DESC").Select("collegename", "star").Find(&list)
+	result := utils.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}

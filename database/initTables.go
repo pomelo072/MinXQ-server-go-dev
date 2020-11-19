@@ -11,5 +11,6 @@ func Createtable() {
 		&models.Stars{},
 		&models.Reply{},
 		&models.Review{},
+		&models.Well{},
 	)
 }

@@ -32,6 +32,7 @@ func main() {
 		msg.Get("/well", controllers.MsgWell)          // 点赞
 		msg.Get("/delete", controllers.MsgDelete)      // 删除留言or回复
 		msg.Get("/list", controllers.MsgList)          // 查看留言
+		msg.Get("/userwell", controllers.UserWell)     // 用户点赞列表
 		msg.Get("/reviewPass", controllers.ReviewPass) // 通过审核
 		msg.Get("/reviewdel", controllers.ReviewDel)   // 不通过审核
 		msg.Get("/reviewlist", controllers.ReviewList) // 获取待审核留言
@@ -50,7 +51,8 @@ func main() {
 
 	// 统计模块 (完成)
 	app.PartyFunc("/count", func(count router.Party) {
-		count.Get("/total", controllers.Total) // 总用户量和总点亮数
+		count.Get("/total", controllers.Total)             // 总用户量和总点亮数
+		count.Get("/collegeList", controllers.CollegeList) // 学院点星数
 	})
 	app.Run(iris.Addr(config.Sysconfig.Port))
 }
